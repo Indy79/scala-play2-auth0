@@ -43,7 +43,7 @@ class HomeController @Inject()(cache: AsyncCacheApi, cc: ControllerComponents)
     val query = String.format(
       "authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid profile&audience=%s&state=%s",
       "oy2zjmILV4TQ0rPwG0dtvi3oSBfF6Apb",
-      "http://localhost:9000/callback",
+      s"${System.getenv("application.url")}/callback",
       "http://play-scala-test",
       state
     )
@@ -54,7 +54,7 @@ class HomeController @Inject()(cache: AsyncCacheApi, cc: ControllerComponents)
   def logout = Action {
     Redirect(
       String.format(
-        "https://%s/v2/logout?client_id=%s&returnTo=http://localhost:9000",
+        s"https://%s/v2/logout?client_id=%s&returnTo=${System.getenv("application.url")}",
         "dev-mz20o35i.eu.auth0.com",
         "oy2zjmILV4TQ0rPwG0dtvi3oSBfF6Apb"
       )

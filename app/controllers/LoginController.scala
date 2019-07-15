@@ -61,7 +61,7 @@ class LoginController @Inject()(cache: AsyncCacheApi, cc: ControllerComponents, 
         Json.obj(
           "client_id" -> "oy2zjmILV4TQ0rPwG0dtvi3oSBfF6Apb",
           "client_secret" -> "jiuZAbsv0NZND-EBWYxLBzLsQ-dCTMz5YEYteaouXhkT6fuKMWUKHxcg1JjeHine",
-          "redirect_uri" -> "http://localhost:9000/callback",
+          "redirect_uri" -> s"${System.getenv("application.url")}/callback",
           "code" -> code,
           "grant_type" -> "authorization_code",
           "audience" -> "http://play-scala-test"
