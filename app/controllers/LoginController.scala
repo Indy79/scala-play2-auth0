@@ -17,7 +17,7 @@ import play.api.cache.AsyncCacheApi
   * application's home page.
   */
 @Singleton
-class LoginController @Inject()(cache: AsyncCacheApi, cc: ControllerComponents, ws: WSClient)(implicit ec: ExecutionContext)
+class LoginController @Inject()(config: Configuration, cache: AsyncCacheApi, cc: ControllerComponents, ws: WSClient)(implicit ec: ExecutionContext)
     extends AbstractController(cc) {
 
   def callback(codeOpt: Option[String] = None, stateOpt: Option[String] = None) = Action.async { request =>
@@ -61,7 +61,7 @@ class LoginController @Inject()(cache: AsyncCacheApi, cc: ControllerComponents, 
         Json.obj(
           "client_id" -> "oy2zjmILV4TQ0rPwG0dtvi3oSBfF6Apb",
           "client_secret" -> "jiuZAbsv0NZND-EBWYxLBzLsQ-dCTMz5YEYteaouXhkT6fuKMWUKHxcg1JjeHine",
-          "redirect_uri" -> s"${System.getenv("application.url")}/callback",
+          "redirect_uri" -> s"${config.get[String]("application.url")}/callback",
           "code" -> code,
           "grant_type" -> "authorization_code",
           "audience" -> "http://play-scala-test"

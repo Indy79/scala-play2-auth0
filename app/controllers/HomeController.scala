@@ -13,7 +13,7 @@ import play.api.cache.AsyncCacheApi
   * application's home page.
   */
 @Singleton
-class HomeController @Inject()(cache: AsyncCacheApi, cc: ControllerComponents)
+class HomeController @Inject()(config: Configuration, cache: AsyncCacheApi, cc: ControllerComponents)
     extends AbstractController(cc) {
 
   /**
@@ -43,7 +43,7 @@ class HomeController @Inject()(cache: AsyncCacheApi, cc: ControllerComponents)
     val query = String.format(
       "authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid profile&audience=%s&state=%s",
       "oy2zjmILV4TQ0rPwG0dtvi3oSBfF6Apb",
-      s"${System.getenv("application.url")}/callback",
+      s"${config.get[String]("application.url")}/callback",
       "http://play-scala-test",
       state
     )
@@ -54,7 +54,7 @@ class HomeController @Inject()(cache: AsyncCacheApi, cc: ControllerComponents)
   def logout = Action {
     Redirect(
       String.format(
-        s"https://%s/v2/logout?client_id=%s&returnTo=${System.getenv("application.url")}",
+        s"https://%s/v2/logout?client_id=%s&returnTo=${config.get[String]("application.url")}",
         "dev-mz20o35i.eu.auth0.com",
         "oy2zjmILV4TQ0rPwG0dtvi3oSBfF6Apb"
       )
